@@ -1,0 +1,33 @@
+# dependencies
+node_modules
+
+# next.js
+.next
+out
+build
+
+# env（ローカル・本番の秘密情報。リポジトリ用の .env.example だけコミットする運用が一般的）
+.env
+.env*.local
+
+# vercel（CLI が作るリンク情報）
+.vercel
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# typescript
+*.tsbuildinfo
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# 証明書・鍵（誤コミット防止）
+*.pem

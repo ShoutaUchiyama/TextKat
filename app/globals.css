@@ -1,0 +1,437 @@
+:root {
+  --color-bg: #fffaf5;
+  --color-surface: #ffffff;
+  --color-primary: #e8783a;
+  --color-primary-hover: #d96a2e;
+  --color-primary-soft: rgba(232, 120, 58, 0.12);
+  --color-accent: #5b8fc7;
+  --color-accent-soft: rgba(91, 143, 199, 0.14);
+  --color-text: #2c3340;
+  --color-muted: #6b7280;
+  --color-border: #e5e0db;
+  --color-error: #c45c5c;
+  --color-success: #3d8b6a;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+  --shadow-soft: 0 8px 28px rgba(44, 51, 64, 0.08);
+  --textkat-page-max-width: 760px;
+  /* ラベル行とテキストエリア内テキストの左端を揃える */
+  --textkat-textarea-padding-x: 1rem;
+  --textkat-textarea-border: 1px;
+  /* ラベル行とテキストエリア行で列幅・溝を一致（12px） */
+  --textkat-panel-gap: 12px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family:
+    "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+/* 1画面に収める：外周パディングはラッパーで管理、カードが残り高さを使用 */
+.textkat-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 0;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: 16px 16px 12px;
+  gap: 6px;
+  box-sizing: border-box;
+}
+
+.textkat-header {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 2px 0 8px;
+  margin: 0;
+}
+
+.textkat-header-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+/* ロゴは元の表示比率のまま（高さは画像・width/height に任せる） */
+.textkat-header-logo {
+  width: auto;
+  height: auto;
+  max-width: min(220px, 85vw);
+}
+
+.textkat-header-tagline {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--color-muted);
+  max-width: min(720px, 92vw);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.textkat-page-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--textkat-page-max-width);
+  margin: 0 auto 0;
+  box-sizing: border-box;
+}
+
+.textkat-main-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--color-border);
+  padding: 0.55rem 0.8rem 0.45rem;
+}
+
+/* テキストエリア行：残り高さをすべて使用 */
+.textkat-panels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--textkat-panel-gap);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.textkat-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ラベル行：入力ラベル・整形結果ラベル・コピーを同一 flex 行（ラッパーなし）で垂直中央揃え — 下の 1fr 1fr パネルと幅を一致 */
+.textkat-label-row-only {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--textkat-panel-gap);
+  margin-bottom: 0.3rem;
+  flex-shrink: 0;
+}
+
+.textkat-label-row-only > .textkat-input-label,
+.textkat-label-row-only > .textkat-result-label {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.textkat-label-row-only > .textkat-copy-button {
+  flex-shrink: 0;
+}
+
+.textkat-editor-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  margin: 0;
+  min-width: 0;
+  padding-top: 0;
+  /* border + padding と内側テキストの開始位置を一致（✓ とプレースホルダーの左端を揃える） */
+  padding-left: calc(var(--textkat-textarea-border) + var(--textkat-textarea-padding-x));
+}
+
+.textkat-editor-heading > svg {
+  flex-shrink: 0;
+  transform: translateY(1px);
+}
+
+@media (max-width: 899px) {
+  .textkat-label-row-only {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .textkat-label-row-only > .textkat-input-label,
+  .textkat-label-row-only > .textkat-result-label {
+    flex: none;
+  }
+
+  .textkat-label-row-only > .textkat-copy-button {
+    align-self: flex-end;
+  }
+}
+
+/* 折り返し文字数行の右端に並べるクイック操作 */
+.textkat-length-row,
+.textkat-card-top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  margin-bottom: 0.35rem;
+  flex-shrink: 0;
+}
+
+.textkat-length-error {
+  flex-shrink: 0;
+  margin: 0 0 0.5rem;
+  font-size: 0.88rem;
+  color: var(--color-error);
+}
+
+.textkat-length-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  min-width: 0;
+}
+
+.textkat-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  margin-left: auto;
+}
+
+/* 折り返し行の ± と同系統（高さ 40px に揃える） */
+.textkat-clear-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 40px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.textkat-clear-button:hover {
+  background: var(--color-primary-soft);
+  border-color: rgba(232, 120, 58, 0.45);
+}
+
+.textkat-clear-button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.textkat-clear-button-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+  width: 1.1rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.textkat-textarea-field {
+  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
+  height: 100%;
+  resize: none;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 0.5rem var(--textkat-textarea-padding-x);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: #fffcf9;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  outline: none;
+}
+
+.textkat-hint-box {
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--radius-md);
+  background: #fff8f0;
+  border: 1px solid #fddbb4;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  overflow: hidden;
+}
+
+.textkat-hint-icon {
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.textkat-label-row {
+  flex-shrink: 0;
+  align-items: baseline;
+}
+
+/* 整形結果列のテキストエリアラッパー */
+.textkat-output-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.textkat-output-wrap .textkat-textarea-field {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+.textkat-copy-button {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: #e8773a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.textkat-copy-button:hover {
+  background: #d06830;
+}
+
+.textkat-copy-button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (min-width: 900px) {
+  .textkat-panels {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .textkat-panels .textkat-panel {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* 数値入力のスピンボタンを隠し、±で操作 */
+.textkat-length-input::-webkit-outer-spin-button,
+.textkat-length-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.textkat-length-input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* トースト */
+@keyframes textkat-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes textkat-toast-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -6px);
+  }
+}
+
+.textkat-toast {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  z-index: 50;
+  max-width: min(360px, calc(100vw - 2rem));
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 10px 36px rgba(44, 51, 64, 0.18);
+  pointer-events: none;
+  transform: translateX(-50%);
+  animation: textkat-toast-in 0.28s ease-out forwards;
+}
+
+.textkat-toast--success {
+  background: #fff;
+  color: var(--color-success);
+  border: 1px solid rgba(61, 139, 106, 0.35);
+}
+
+.textkat-toast--error {
+  background: #fff;
+  color: var(--color-error);
+  border: 1px solid rgba(196, 92, 92, 0.35);
+}
+
+.textkat-toast--leave {
+  animation: textkat-toast-out 0.28s ease-in forwards;
+}
+
