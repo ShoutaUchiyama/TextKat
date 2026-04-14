@@ -334,7 +334,7 @@ export function TextFormatter() {
                 className="textkat-textarea-field textkat-input-area"
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
-                placeholder="ここにテキストを入力してください。改行は無視され、指定文字数で再整形されます。"
+                placeholder="ここにテキストを入力してください。空行で区切った段落のあいだは改行だけ入ります（空行は詰めます）。段落内の改行はつなげてから指定文字数で折り返します。"
               />
             </div>
 
@@ -364,7 +364,7 @@ export function TextFormatter() {
               className="textkat-hint-icon"
             />
             <span>
-              入力内の改行はつなげてから、指定文字数で区切ります。空の入力のときは結果も空です。
+              空行で区切られた段落は、整形結果では段落のあいだを改行だけにします（入力の空行1行分は詰めます）。段落内の改行だけつなげて、指定文字数で区切ります。空の入力のときは結果も空です。
             </span>
           </div>
         </section>
